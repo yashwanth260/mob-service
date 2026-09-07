@@ -1,0 +1,211 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .glass {
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(14px);
+  }
+
+  .gradient-text {
+    background: linear-gradient(100deg, #2dd4bf 0%, #7defe0 35%, #e879f9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* Atmosphere Layers */
+.aurora {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.aurora::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  left: -100px;
+  width: 620px;
+  height: 620px;
+  background: #2dd4bf;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.5;
+}
+.aurora::after {
+  content: '';
+  position: absolute;
+  bottom: -100px;
+  right: -100px;
+  width: 680px;
+  height: 680px;
+  background: #e879f9;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.5;
+}
+
+.aurora-mid {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 520px;
+  height: 320px;
+  background: linear-gradient(to right, #2dd4bf, #e879f9);
+  border-radius: 50%;
+  filter: blur(110px);
+  pointer-events: none;
+}
+
+.grid-tex {
+  position: absolute;
+  inset: 0;
+  background-size: 56px 56px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  mask-image: radial-gradient(ellipse 90% 62% at 50% 38%, #000 18%, transparent 72%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 62% at 50% 38%, #000 18%, transparent 72%);
+  pointer-events: none;
+}
+
+/* Coverflow Stage */
+.coverflow {
+  position: relative;
+  height: 440px;
+  perspective: 1600px;
+  transform-style: preserve-3d;
+}
+
+.cf-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 280px;
+  height: 372px;
+  margin-left: -140px;
+  margin-top: -186px;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 30px 70px -28px rgba(0, 0, 0, 0.85);
+  background: #0e141b;
+  will-change: transform;
+  transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.55s ease, filter 0.55s ease;
+  cursor: pointer;
+}
+
+/* Base Coverflow Positions (Desktop) */
+.cf-pos-0 {
+  transform: translate3d(0, 0, 140px) rotateY(0) scale(1);
+  opacity: 1;
+  z-index: 50;
+  box-shadow: 0 40px 90px -30px rgba(45, 212, 191, 0.35), 0 0 0 1px rgba(45, 212, 191, 0.25);
+}
+
+.cf-pos-1 {
+  transform: translate3d(168px, 0, -40px) rotateY(-42deg) scale(0.86);
+  opacity: 0.92;
+  z-index: 40;
+}
+.cf-pos-n1 {
+  transform: translate3d(-168px, 0, -40px) rotateY(42deg) scale(0.86);
+  opacity: 0.92;
+  z-index: 40;
+}
+
+.cf-pos-2 {
+  transform: translate3d(310px, 0, -200px) rotateY(-46deg) scale(0.7);
+  opacity: 0.55;
+  z-index: 30;
+}
+.cf-pos-n2 {
+  transform: translate3d(-310px, 0, -200px) rotateY(46deg) scale(0.7);
+  opacity: 0.55;
+  z-index: 30;
+}
+
+.cf-pos-3 {
+  transform: translate3d(420px, 0, -360px) rotateY(-48deg) scale(0.56);
+  opacity: 0.22;
+  z-index: 20;
+}
+.cf-pos-n3 {
+  transform: translate3d(-420px, 0, -360px) rotateY(48deg) scale(0.56);
+  opacity: 0.22;
+  z-index: 20;
+}
+
+.cf-hidden {
+  transform: translate3d(0, 0, -520px) scale(0.4);
+  opacity: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Coverflow Responsive adjustments */
+@media (max-width: 860px) {
+  .coverflow {
+    height: 400px;
+  }
+  .cf-card {
+    width: 230px;
+    height: 312px;
+    margin-left: -115px;
+    margin-top: -156px;
+  }
+  .cf-pos-1 { transform: translate3d(140px, 0, -40px) rotateY(-42deg) scale(0.84); }
+  .cf-pos-n1 { transform: translate3d(-140px, 0, -40px) rotateY(42deg) scale(0.84); }
+  .cf-pos-2 { transform: translate3d(250px, 0, -200px) rotateY(-46deg) scale(0.66); }
+  .cf-pos-n2 { transform: translate3d(-250px, 0, -200px) rotateY(46deg) scale(0.66); }
+  .cf-pos-3, .cf-pos-n3 { opacity: 0; pointer-events: none; }
+}
+
+@media (max-width: 480px) {
+  .coverflow {
+    height: 360px;
+  }
+  .cf-card {
+    width: 200px;
+    height: 272px;
+    margin-left: -100px;
+    margin-top: -136px;
+  }
+  .cf-pos-1 { transform: translate3d(106px, 0, -60px) rotateY(-40deg) scale(0.78); opacity: 0.7; }
+  .cf-pos-n1 { transform: translate3d(-106px, 0, -60px) rotateY(40deg) scale(0.78); opacity: 0.7; }
+  .cf-pos-2, .cf-pos-n2 { opacity: 0; pointer-events: none; }
+}
+
+/* Nav Controls */
+.nav-btn {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.nav-btn:hover {
+  transform: scale(1.08);
+  border-color: #2dd4bf;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.22);
+  transition: all 0.35s ease;
+  cursor: pointer;
+}
+.dot.active {
+  width: 26px;
+  background: linear-gradient(90deg, #2dd4bf, #e879f9);
+  box-shadow: 0 0 14px rgba(45, 212, 191, 0.6);
+}
